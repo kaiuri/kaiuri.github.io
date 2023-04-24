@@ -5,16 +5,6 @@
 @tailwind screens;
 @tailwind tailwind;
 
-/* Path: ../static/fonts/ 
- - JetBrains_Mono_Bold_Italic_Nerd_Font_Complete_Mono_Windows_Compatible.ttf
- - JetBrains_Mono_Bold_Italic_Nerd_Font_Complete_Windows_Compatible.ttf
- - JetBrains_Mono_Bold_Nerd_Font_Complete_Mono_Windows_Compatible.ttf
- - JetBrains_Mono_Bold_Nerd_Font_Complete_Windows_Compatible.ttf
- - JetBrains_Mono_Italic_Nerd_Font_Complete_Mono_Windows_Compatible.ttf
- - JetBrains_Mono_Italic_Nerd_Font_Complete_Windows_Compatible.ttf
- - JetBrains_Mono_Regular_Nerd_Font_Complete_Mono_Windows_Compatible.ttf
- - JetBrains_Mono_Regular_Nerd_Font_Complete_Windows_Compatible.ttf
- */
 @font-face {
   font-family: 'JetBrains Mono';
   font-style: normal;
