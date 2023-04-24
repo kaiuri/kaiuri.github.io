@@ -28,9 +28,10 @@
 
 <header class="block">
   <nav class="block">
-    <a class="text-sky-100 text-2xl font-bold p-2" href={current.href}
-      >{current.name}</a
-    >
+    <a class="text-sky-100 text-2xl font-bold p-2"
+       href={current.href}>
+      {current.name}
+    </a>
     <ul class="inline-block">
       {#each rest as p}
         <li class="inline-block text-2xl font-bold p-2 text-cyan-300">
