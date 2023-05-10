@@ -1,6 +1,5 @@
 {
   "tsserver.enable": true,
-
-  "suggest.insertMode": "replace"
-
+  "suggest.insertMode": "replace",
+  "svelte.plugin.html.tagComplete.enable": false,
 }

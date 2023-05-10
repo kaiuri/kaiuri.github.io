@@ -14,10 +14,13 @@
     // { name: "RESUME", href: "/resume" },
   ];
 
-  $: current = R.applySpec({
+  const currentPageSpec = R.applySpec({
     name: (url: URL) => url.pathname.toUpperCase(),
     href: (url: URL) => url.href,
-  })($page.url);
+  });
+
+  $: current = currentPageSpec($page.url);
+
   $: rest = routes.filter((r) => r.href !== $page.url.pathname);
 </script>
 
@@ -28,8 +31,7 @@
 
 <header class="block">
   <nav class="block">
-    <a class="text-sky-100 text-2xl font-bold p-2"
-       href={current.href}>
+    <a class="text-sky-100 text-2xl font-bold p-2" href={current.href}>
       {current.name}
     </a>
     <ul class="inline-block">
