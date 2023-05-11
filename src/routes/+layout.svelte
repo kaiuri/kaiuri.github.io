@@ -1,43 +1,44 @@
 <script lang="ts">
-  import * as R from "ramda";
   import "../app.css";
   import { page } from "$app/stores";
+  import { pipe } from "fp-ts/function";
+  import { map } from "fp-ts/lib/Functor";
+
+  const RouteRegex = new RegExp(/\/src\/routes(.*)\/\+page.svelte/);
+  // '/src/routes/+page.svelte': [Function: /src/routes/+page.svelte],
+  // '/src/routes/about/+page.svelte': [Function: /src/routes/about/+page.svelte]
+  const routes = pipe(
+    import.meta.glob("/src/routes/**/*.svelte"),
+    (components) => Object.keys(components),
+    (files) =>
+      files.flatMap((route: string) => route.match(RouteRegex)?.[1] ?? ""),
+    (routes) => Array.from(new Set(routes)),
+    (routes) =>
+      routes.flatMap((route) => ({
+        name: route === "" ? "/HOME" : route.toUpperCase(),
+        href: route === "" ? "/" : route,
+      }))
+  );
 
   let width: number;
   let height: number;
-  const routes = [
-    { name: "HOME", href: "/" },
-    { name: "ABOUT", href: "/about" },
-    // { name: "CONTACT", href: "/contact" },
-    // { name: "BLOG", href: "/blog" },
-    // { name: "PROJECTS", href: "/projects" },
-    // { name: "RESUME", href: "/resume" },
-  ];
-
-  const currentPageSpec = R.applySpec({
-    name: (url: URL) => url.pathname.toUpperCase(),
-    href: (url: URL) => url.href,
-  });
-
-  $: current = currentPageSpec($page.url);
-
-  $: rest = routes.filter((r) => r.href !== $page.url.pathname);
 </script>
 
 <svelte:window bind:outerHeight={height} bind:outerWidth={width} />
 <svelte:head>
-  <title>{current.name}</title>
+  <title>{$page.url.pathname}</title>
 </svelte:head>
 
 <header class="block">
   <nav class="block">
-    <a class="text-sky-100 text-2xl font-bold p-2" href={current.href}>
-      {current.name}
-    </a>
     <ul class="inline-block">
-      {#each rest as p}
-        <li class="inline-block text-2xl font-bold p-2 text-cyan-300">
-          <a class="hover:text-red-300" href={p.href}>{p.name}</a>
+      {#each routes as p}
+        <li class="inline-block text-2xl p-2">
+          <a
+            class={"hover:text-red-300 " +
+              ($page.url.pathname === p.href ? "font-bold" : "")}
+            href={p.href}>{p.name}</a
+          >
         </li>
       {/each}
     </ul>
@@ -69,6 +70,7 @@
     font-weight: theme("fontWeight.bold");
   }
   :global(a) {
-    color: theme("colors.cyan.300");
+    color: theme("colors.cyan.400");
   }
 </style>
+
